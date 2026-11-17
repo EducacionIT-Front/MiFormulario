@@ -82,7 +82,7 @@ data-bs-dismiss="modal"></button>
 <div class="modal-body">
 
 
-<form action="https://api.web3forms.com/submit" method="post" novalidate class="needs-validation">
+<form id="miFormulario" action="https://api.web3forms.com/submit" method="post" novalidate class="needs-validation">
 <input type="hidden" name="access_key" value="509cbbaf-d250-4c47-b12e-746cca04eb3f">
 <div class="mb-3">
 <label for="nombre" 
@@ -143,7 +143,7 @@ válido.</div>
 
 </form>
 
-
+<div id="mensajeGracias" class="d-none"> Gracias por mandar el formulario</div>
 
     
 </div>
@@ -240,27 +240,25 @@ data-bs-dismiss="modal">
     <script src="js/code.js"></script>
     <!--codigo de bootstrap para que funcione la validacion personalizada-->
     <script>
+const formulario = document.querySelector("#miFormulario");
+const mensajeGracias = document.querySelector("#mensajeGracias");
 
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-(() => {
-  'use strict'
+formulario.addEventListener("submit", function (event) {
 
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  const forms = document.querySelectorAll('.needs-validation')
+  event.preventDefault();
 
-  // Loop over them and prevent submission
-  Array.from(forms).forEach(form => {
-    form.addEventListener('submit', event => {
-      if (!form.checkValidity()) {
-        event.preventDefault()
-        event.stopPropagation()
-      }
+  if (!formulario.checkValidity()) {
+    event.stopPropagation();
+    formulario.classList.add("was-validated");
+    return;
+  }
 
-      form.classList.add('was-validated')
-    }, false)
-  })
-})()
+  formulario.classList.add("was-validated");
 
+  formulario.classList.add("d-none");
+  mensajeGracias.classList.remove("d-none");
+
+});
 
     </script>
 
